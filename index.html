@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction of Car Insurance Claims</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome pour les icônes -->
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #e0f7fa, #80deea);
+            color: #333;
+        }
+        header {
+            background-color: #00796b; /* Couleur d'arrière-plan de l'en-tête */
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center; /* Center the content horizontally */
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: white; /* Couleur de fond du conteneur principal */
+        }
+        .form-container {
+            flex: 1; /* Prend 1/2 de la largeur */
+            max-width: 500px; /* Limite la largeur maximale */
+            padding: 20px;
+            border-right: 1px solid #ccc; /* Ligne séparatrice */
+        }
+        .result-container {
+            flex: 1; /* Prend 1/2 de la largeur */
+            padding: 20px;
+            display: flex;
+            align-items: center; /* Centrer verticalement */
+            justify-content: center; /* Centrer horizontalement */
+            font-size: 24px;
+            background-color: #e8f5e9; /* Couleur de fond pour les résultats */
+            border-radius: 10px;
+        }
+        label {
+            font-weight: bold; /* Met en gras les labels */
+        }
+        input[type="number"], select {
+            width: calc(100% - 20px); /* S'assurer que les champs occupent toute la largeur */
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px; /* Espacement entre les champs */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #00796b; /* Couleur d'arrière-plan du bouton */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s; /* Animation de transition */
+        }
+        button:hover {
+            background-color: #004d40; /* Couleur d'arrière-plan au survol */
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: #666;
+            position: relative; /* Changer de absolute à relative */
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Prediction of Car Insurance Claims</h1>
+    </header>
+    
+        <div class="container">
+        <div class="form-container">
+            <h2>Enter Your Details</h2>
+            <form action="/predict" method="post">
+            <label for="income">Income</label>
+            <input type="number" id="income" name="income" min="0" required><br><br>
+            
+            <label for="customer_state">State</label>
+            <select id="customer_state" name="customer_state" required>
+                <option value="">Select</option>
+                <option value="Arizona">Arizona</option>
+                <option value="California">California</option>
+                <option value="Oregon">Oregon</option>
+                <option value="Nevada">Nevada</option>
+                <option value="Washington">Washington</option>
+            </select><br><br>
+
+            <label for="total_claims">Total Claims</label>
+            <input type="number" id="total_claims" name="total_claims" min="0" required><br><br>
+
+            <label for="total_claims_amount">Total claims Amount</label>
+            <input type="number" id="total_claims_amount" name="total_claims_amount" min="0" required><br><br>
+            
+            <label for="customer_lifetime_value">Customer Lifetime Value</label>
+            <input type="number" id="customer_lifetime_value" name="customer_lifetime_value" required><br><br>
+            
+            <label for="highest_education">Highest Education</label>
+            <select id="highest_education" name="highest_education" required>
+                <option value="">Select</option>
+                <option value="Bachelor">Bachelor</option>
+                <option value="Associate">Associate</option>
+                <option value="High School">High School</option>
+                <option value="Master">Master</option>
+                <option value="Doctoral">Doctoral</option>
+            </select><br><br>
+
+            <label for="employment_status">Employment Status</label>
+            <select id="employment_status" name="employment_status" required>
+                <option value="">Select</option>
+                <option value="Medical Leave">Medical Leave</option>
+                <option value="Employed">Employed</option>
+                <option value="Retired">Retired</option>
+                <option value="Disabled">Disabled</option>
+            </select><br><br>
+
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+            </select><br><br>
+
+            <label for="residence_type">Residence Type</label>
+            <select id="residence_type" name="residence_type" required>
+                <option value="">Select</option>
+                <option value="Suburban">Suburban</option>
+                <option value="Urban">Urban</option>
+                <option value="Rural">Rural</option>
+            </select><br><br>
+
+            <label for="marital_status">Marital Status</label>
+            <select id="marital_status" name="marital_status" required>
+                <option value="">Select</option>
+                <option value="Married">Married</option>
+                <option value="Divorced">Divorced</option>
+                <option value="Single">Single</option>
+            </select><br><br>
+
+            <label for="sales_channel">Sales Channel</label>
+            <select id="sales_channel" name="sales_channel" required>
+                <option value="">Select</option>
+                <option value="Branch">Branch</option>
+                <option value="Agent">Agent</option>
+                <option value="Web">Web</option>
+                <option value="Call Center">Call Center</option>
+            </select><br><br>
+
+            <label for="coverage">Coverage</label>
+            <select id="coverage" name="coverage" required>
+                <option value="">Select</option>
+                <option value="Basic">Basic</option>
+                <option value="Extended">Extended</option>
+                <option value="Premium">Premium</option>
+            </select><br><br>
+
+            <label for="vehicle_class">Vehicle Class</label>
+            <select id="vehicle_class" name="vehicle_class" required>
+                <option value="">Select</option>
+                <option value="Two-Door Car">Two-Door Car</option>
+                <option value="Four-Door Car">Four-Door Car</option>
+                <option value="Luxury SUV">Luxury SUV</option>
+                <option value="SUV">SUV</option>
+                <option value="Sports Car">Sports Car</option>
+                <option value="Luxury Car">Luxury Car</option>
+            </select><br><br>
+            
+            <label for="vehicle_size">Vehicle Size</label>
+            <select id="vehicle_size" name="vehicle_size" required>
+                <option value="">Select</option>
+                <option value="Small">Small</option>
+                <option value="Midsize">Midsize</option>
+                <option value="Large">Large</option>
+            </select><br><br>
+            
+
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+    
+        <div class="result-container">
+            {% if predicted_amount is defined %}
+                <div id="predicted-amount">Predicted Claim Amount($): {{ predicted_amount }}</div>
+            {% elif error is defined %}
+                <div id="error-message" style="color: red;">{{ error }}</div>
+            {% else %}
+                <div id="predicted-amount">Predicted Claim Amount ($): --</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
